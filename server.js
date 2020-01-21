@@ -9,26 +9,26 @@ const posts = require("./routes/api/posts");
 
 const app = express();
 
-//Body parser middleware
+// Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//DB Config
+// DB Config
 const db = require("./config/keys").mongoURI;
 
-//connect to MongoDB
+// Connect to MongoDB
 mongoose
   .connect(db)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-//passport middleware
+// Passport middleware
 app.use(passport.initialize());
 
-//passport config
+// Passport Config
 require("./config/passport")(passport);
 
-//use routes
+// Use Routes
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
