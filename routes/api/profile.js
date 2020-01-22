@@ -11,7 +11,7 @@ const validateEducationInput = require("../../validation/education");
 //load profile model
 const Profile = require("../../models/Profile");
 
-//load user profile
+//load user model
 const User = require("../../models/User");
 
 // @route   GET api/profile/test
@@ -226,6 +226,54 @@ router.post(
 
       profile.save().then(profile => res.json(profile));
     });
+  }
+);
+
+// @route   DELETE api/profile/experience/:exp_id
+// @desc    delete experience from profile
+// @access  Private
+router.delete(
+  "/experience/:exp_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //get remove index
+        const removeIndex = profile.experience
+          .map(item => item.id)
+          .indexOf(req.params.exp_id);
+
+        //splice out of the array
+        profile.experience.splice(removeIndex, 1);
+
+        //save
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+// @route   DELETE api/profile/education/:edu_id
+// @desc    delete education from profile
+// @access  Private
+router.delete(
+  "/education/:edu_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        // Get remove index
+        const removeIndex = profile.education
+          .map(item => item.id)
+          .indexOf(req.params.edu_id);
+
+        // Splice out of array
+        profile.education.splice(removeIndex, 1);
+
+        // Save
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.status(404).json(err));
   }
 );
 
