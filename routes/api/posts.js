@@ -88,4 +88,32 @@ router.delete(
   }
 );
 
+// @route   POST api/posts/like/:id
+// @desc    Like post by post id
+// @access  Private
+router.post(
+  "/like/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id).then(post => {
+        //check if user has already liked this post(id already exists)
+        if (
+          post.likes.filter(like => like.user.toString() === req.user.id)
+            .length > 0
+        ) {
+          return res
+            .status(400)
+            .json({ alreadyliked: "this user already like this post" });
+        }
+        //add user id to likes array
+        post.likes.unshift({ user: req.user.id });
+
+        //save the post to the database
+        post.save().then(post => res.json(post));
+      });
+    });
+  }
+);
+
 module.exports = router;
