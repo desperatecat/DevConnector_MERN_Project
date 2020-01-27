@@ -4,7 +4,8 @@ import {
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_ERRORS
+  GET_ERRORS,
+  SET_CURRENT_USER
 } from "./types";
 
 //get current profile
@@ -37,6 +38,26 @@ export const createProfile = (profileData, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+//delete account and profile
+export const deleteAccount = () => dispatch => {
+  if (window.confirm("Are you sure to delete? This can NOT be undone!")) {
+    axios
+      .delete("/api/profile")
+      .then(res =>
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: {} //sent empty object as the payload(which is defined as user) to authReducer, isAuthenticated then set to false, user log out
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
 };
 
 //profile loading
