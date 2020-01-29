@@ -28,7 +28,7 @@ class PostItem extends Component {
   }
 
   render() {
-    const { post, auth, showActions } = this.props;
+    const { post, auth, showActions } = this.props; //post is passed from PostFeed
 
     return (
       <div className="card card-body mb-3">
