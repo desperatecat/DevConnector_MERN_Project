@@ -24,6 +24,7 @@ class ProfileGithub extends Component {
       .then(res => res.json())
       .then(data => {
         if (this.refs.myRef) {
+          //check if user has a github profile
           this.setState({ repos: data });
         }
       })
