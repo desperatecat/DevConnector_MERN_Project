@@ -21,6 +21,7 @@ class PostItem extends Component {
   findUserLike(likes) {
     const { auth } = this.props;
     if (likes.filter(like => like.user === auth.user.id).length > 0) {
+      //check if user has liked it or not
       return true;
     } else {
       return false;
