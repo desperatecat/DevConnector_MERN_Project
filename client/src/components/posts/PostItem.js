@@ -90,7 +90,7 @@ class PostItem extends Component {
 }
 
 PostItem.defaultProps = {
-  showActions: true
+  showActions: true //this is set to false on Post component if post exists
 };
 
 PostItem.propTypes = {
