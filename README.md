@@ -1,5 +1,7 @@
 # DevConnector_MERN_Project
 
+https://developer-connector-project.herokuapp.com/
+
 Developed a MERN(React, Redux, Node.js, Express.js, MongoDB) stack project which includes React frontend
 components, JWT authentication, and extensive backend Express API. User can sign up/in, create profile with
 experience and education info, also can post and comment.
